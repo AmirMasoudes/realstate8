@@ -1,11 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
+import { useAtom } from "jotai";
+import { mobileMenuOpenAtom } from "../base/atoms";
 import MobileMenu from "./mobilem";
 
 export default function Navbar() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useAtom(mobileMenuOpenAtom);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -24,38 +26,38 @@ export default function Navbar() {
               href="/"
               className="text-2xl font-bold text-[#1e3a5f] hover:opacity-80 transition-opacity"
             >
-              LOGO
+              لوگو
             </Link>
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden md:flex items-center space-x-reverse space-x-8">
               <Link
                 href="/"
                 className="text-[#1e3a5f] font-medium hover:text-[#0f2a47] transition-colors"
               >
-                Home
+                خانه
               </Link>
               <Link
                 href="/AboutUs"
                 className="text-[#1e3a5f] font-medium hover:text-[#0f2a47] transition-colors"
               >
-                About Us
+                درباره ما
               </Link>
               <Link
                 href="/Prop"
                 className="text-[#1e3a5f] font-medium hover:text-[#0f2a47] transition-colors"
               >
-                Properties
+                املاک
               </Link>
               <Link
                 href="/CommunicationUs"
                 className="text-[#1e3a5f] font-medium hover:text-[#0f2a47] transition-colors"
               >
-                Contact Us
+                تماس با ما
               </Link>
             </div>
             <button
               onClick={toggleMobileMenu}
               className="md:hidden text-[#1e3a5f] p-2 hover:bg-gray-100 rounded-lg transition-colors"
-              aria-label="Toggle menu"
+              aria-label="باز کردن منو"
             >
               {isMobileMenuOpen ? (
                 <svg

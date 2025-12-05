@@ -36,18 +36,18 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out md:hidden ${
-          isOpen ? "translate-x-0" : "translate-x-full"
+        className={`fixed top-0 left-0 h-full w-80 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out md:hidden ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         <div className="flex flex-col h-full">
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-gray-200">
-            <div className="text-2xl font-bold text-[#1e3a5f]">LOGO</div>
+            <div className="text-2xl font-bold text-[#1e3a5f]">لوگو</div>
             <button
               onClick={onClose}
               className="text-[#1e3a5f] p-2 hover:bg-gray-100 rounded-lg transition-colors"
-              aria-label="Close menu"
+              aria-label="بستن منو"
             >
               <svg
                 className="w-6 h-6"
@@ -74,7 +74,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                   onClick={handleLinkClick}
                   className="block text-[#1e3a5f] font-medium text-lg py-3 px-4 rounded-lg hover:bg-[#1e3a5f] hover:text-white transition-all duration-300"
                 >
-                  Home
+                  خانه
                 </Link>
               </li>
               <li>
@@ -83,7 +83,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                   onClick={handleLinkClick}
                   className="block text-[#1e3a5f] font-medium text-lg py-3 px-4 rounded-lg hover:bg-[#1e3a5f] hover:text-white transition-all duration-300"
                 >
-                  About Us
+                  درباره ما
                 </Link>
               </li>
               <li>
@@ -92,7 +92,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                   onClick={handleLinkClick}
                   className="block text-[#1e3a5f] font-medium text-lg py-3 px-4 rounded-lg hover:bg-[#1e3a5f] hover:text-white transition-all duration-300"
                 >
-                  Properties
+                  املاک
                 </Link>
               </li>
               <li>
@@ -101,7 +101,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                   onClick={handleLinkClick}
                   className="block text-[#1e3a5f] font-medium text-lg py-3 px-4 rounded-lg hover:bg-[#1e3a5f] hover:text-white transition-all duration-300"
                 >
-                  Contact Us
+                  تماس با ما
                 </Link>
               </li>
             </ul>
@@ -112,16 +112,16 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             <div className="space-y-3">
               <div className="text-sm text-gray-600">
                 <p className="font-semibold text-[#1e3a5f] mb-2">
-                  Contact Info
+                  اطلاعات تماس
                 </p>
                 <p>📧 info@realestate.com</p>
-                <p>📞 +98 21 1234 5678</p>
+                <p>📞 021 1234 5678</p>
               </div>
-              <div className="flex space-x-4 pt-2">
+              <div className="flex space-x-reverse space-x-4 pt-2">
                 <a
                   href="#"
                   className="w-10 h-10 bg-[#1e3a5f] text-white rounded-full flex items-center justify-center hover:bg-[#0f2a47] transition-colors"
-                  aria-label="Facebook"
+                  aria-label="فیس‌بوک"
                 >
                   <svg
                     className="w-5 h-5"
@@ -134,7 +134,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 <a
                   href="#"
                   className="w-10 h-10 bg-[#1e3a5f] text-white rounded-full flex items-center justify-center hover:bg-[#0f2a47] transition-colors"
-                  aria-label="Instagram"
+                  aria-label="اینستاگرام"
                 >
                   <svg
                     className="w-5 h-5"
@@ -147,7 +147,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 <a
                   href="#"
                   className="w-10 h-10 bg-[#1e3a5f] text-white rounded-full flex items-center justify-center hover:bg-[#0f2a47] transition-colors"
-                  aria-label="Twitter"
+                  aria-label="توییتر"
                 >
                   <svg
                     className="w-5 h-5"

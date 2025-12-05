@@ -12,16 +12,16 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="space-y-4">
-            <h3 className="text-2xl font-bold mb-4">LOGO</h3>
+            <h3 className="text-2xl font-bold mb-4">لوگو</h3>
             <p className="text-gray-300 text-sm leading-relaxed">
-              Your trusted partner in finding the perfect home. We specialize in
-              premium real estate properties and exceptional service.
+              شریک قابل اعتماد شما در پیدا کردن خانه ایده‌آل. ما در زمینه املاک
+              لوکس و خدمات استثنایی تخصص داریم.
             </p>
-            <div className="flex space-x-4 pt-4">
+            <div className="flex space-x-reverse space-x-4 pt-4">
               <a
                 href="#"
                 className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors"
-                aria-label="Facebook"
+                aria-label="فیس‌بوک"
               >
                 <svg
                   className="w-5 h-5"
@@ -34,7 +34,7 @@ export default function Footer() {
               <a
                 href="#"
                 className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors"
-                aria-label="Instagram"
+                aria-label="اینستاگرام"
               >
                 <svg
                   className="w-5 h-5"
@@ -47,7 +47,7 @@ export default function Footer() {
               <a
                 href="#"
                 className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors"
-                aria-label="Twitter"
+                aria-label="توییتر"
               >
                 <svg
                   className="w-5 h-5"
@@ -60,7 +60,7 @@ export default function Footer() {
               <a
                 href="#"
                 className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors"
-                aria-label="LinkedIn"
+                aria-label="لینکدین"
               >
                 <svg
                   className="w-5 h-5"
@@ -75,14 +75,14 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+            <h4 className="text-lg font-semibold mb-4">لینک‌های سریع</h4>
             <ul className="space-y-2">
               <li>
                 <Link
                   href="/"
                   className="text-gray-300 hover:text-white transition-colors text-sm"
                 >
-                  Home
+                  خانه
                 </Link>
               </li>
               <li>
@@ -90,7 +90,7 @@ export default function Footer() {
                   href="/AboutUs"
                   className="text-gray-300 hover:text-white transition-colors text-sm"
                 >
-                  About Us
+                  درباره ما
                 </Link>
               </li>
               <li>
@@ -98,7 +98,7 @@ export default function Footer() {
                   href="/Prop"
                   className="text-gray-300 hover:text-white transition-colors text-sm"
                 >
-                  Properties
+                  املاک
                 </Link>
               </li>
               <li>
@@ -106,7 +106,7 @@ export default function Footer() {
                   href="/CommunicationUs"
                   className="text-gray-300 hover:text-white transition-colors text-sm"
                 >
-                  Contact Us
+                  تماس با ما
                 </Link>
               </li>
               <li>
@@ -114,7 +114,7 @@ export default function Footer() {
                   href="/bookmark"
                   className="text-gray-300 hover:text-white transition-colors text-sm"
                 >
-                  Bookmarks
+                  نشان‌گذاری‌ها
                 </Link>
               </li>
             </ul>
@@ -122,14 +122,14 @@ export default function Footer() {
 
           {/* Services */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Services</h4>
+            <h4 className="text-lg font-semibold mb-4">خدمات</h4>
             <ul className="space-y-2">
               <li>
                 <a
                   href="#"
                   className="text-gray-300 hover:text-white transition-colors text-sm"
                 >
-                  Property Sales
+                  فروش املاک
                 </a>
               </li>
               <li>
@@ -137,7 +137,7 @@ export default function Footer() {
                   href="#"
                   className="text-gray-300 hover:text-white transition-colors text-sm"
                 >
-                  Property Rentals
+                  اجاره املاک
                 </a>
               </li>
               <li>
@@ -145,7 +145,7 @@ export default function Footer() {
                   href="#"
                   className="text-gray-300 hover:text-white transition-colors text-sm"
                 >
-                  Property Management
+                  مدیریت املاک
                 </a>
               </li>
               <li>
@@ -153,7 +153,7 @@ export default function Footer() {
                   href="#"
                   className="text-gray-300 hover:text-white transition-colors text-sm"
                 >
-                  Real Estate Consulting
+                  مشاوره املاک
                 </a>
               </li>
               <li>
@@ -161,7 +161,7 @@ export default function Footer() {
                   href="#"
                   className="text-gray-300 hover:text-white transition-colors text-sm"
                 >
-                  Investment Opportunities
+                  فرصت‌های سرمایه‌گذاری
                 </a>
               </li>
             </ul>
@@ -169,11 +169,11 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
+            <h4 className="text-lg font-semibold mb-4">اطلاعات تماس</h4>
             <ul className="space-y-3 text-sm text-gray-300">
               <li className="flex items-start">
                 <svg
-                  className="w-5 h-5 mr-2 mt-0.5 shrink-0"
+                  className="w-5 h-5 ml-2 mt-0.5 shrink-0"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -191,11 +191,11 @@ export default function Footer() {
                     d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                   />
                 </svg>
-                <span>123 Main Street, Tehran, Iran</span>
+                <span>تهران، خیابان اصلی، پلاک 123</span>
               </li>
               <li className="flex items-center">
                 <svg
-                  className="w-5 h-5 mr-2 shrink-0"
+                  className="w-5 h-5 ml-2 shrink-0"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -207,11 +207,11 @@ export default function Footer() {
                     d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                   />
                 </svg>
-                <span>+98 21 1234 5678</span>
+                <span>021 1234 5678</span>
               </li>
               <li className="flex items-center">
                 <svg
-                  className="w-5 h-5 mr-2 shrink-0"
+                  className="w-5 h-5 ml-2 shrink-0"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -227,7 +227,7 @@ export default function Footer() {
               </li>
               <li className="flex items-center">
                 <svg
-                  className="w-5 h-5 mr-2 shrink-0"
+                  className="w-5 h-5 ml-2 shrink-0"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -239,7 +239,7 @@ export default function Footer() {
                     d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
-                <span>Mon - Sat: 9:00 AM - 6:00 PM</span>
+                <span>شنبه تا پنجشنبه: 9 صبح - 6 عصر</span>
               </li>
             </ul>
           </div>
@@ -249,26 +249,26 @@ export default function Footer() {
         <div className="border-t border-white/10 mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-gray-300 text-sm">
-              © {currentYear} Real Estate. All rights reserved.
+              © {currentYear} املاک. تمامی حقوق محفوظ است.
             </p>
-            <div className="flex space-x-6 text-sm">
+            <div className="flex space-x-reverse space-x-6 text-sm">
               <a
                 href="#"
                 className="text-gray-300 hover:text-white transition-colors"
               >
-                Privacy Policy
+                حریم خصوصی
               </a>
               <a
                 href="#"
                 className="text-gray-300 hover:text-white transition-colors"
               >
-                Terms of Service
+                شرایط استفاده
               </a>
               <a
                 href="#"
                 className="text-gray-300 hover:text-white transition-colors"
               >
-                Cookie Policy
+                سیاست کوکی
               </a>
             </div>
           </div>

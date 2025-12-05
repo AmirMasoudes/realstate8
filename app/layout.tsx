@@ -1,23 +1,21 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Vazirmatn } from "next/font/google";
 import "./globals.css";
 import Navbar from "../services/components/navbar";
 import Footer from "../services/components/footer";
+import { Provider } from "jotai";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const vazirmatn = Vazirmatn({
+  subsets: ["arabic", "latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-vazirmatn",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Real Estate - Your Ideal Home Is Waiting",
+  title: "املاک - خانه ایده‌آل شما منتظر است",
   description:
-    "Find your perfect home with our premium real estate services. Browse through our curated selection of properties.",
+    "خانه ایده‌آل خود را با خدمات املاک ما پیدا کنید. از مجموعه منتخب املاک ما دیدن کنید.",
 };
 
 export default function RootLayout({
@@ -26,13 +24,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Navbar />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
+    <html lang="fa" dir="rtl">
+      <body className={`${vazirmatn.variable} font-sans antialiased`}>
+        <Provider>
+          <Navbar />
+          <main className="min-h-screen">{children}</main>
+          <Footer />
+        </Provider>
       </body>
     </html>
   );
