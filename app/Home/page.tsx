@@ -1,9 +1,12 @@
 import React from "react";
+import Hero from "./components/hero";
+import ListProp from "./components/listprop";
 
-export default function AboutUs() {
+export default function Home() {
   return (
     <div>
-      <h1>About Us</h1>
+      <Hero />
+      <ListProp />
     </div>
-  )
+  );
 }
