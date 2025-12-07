@@ -27,6 +27,8 @@ export default function FilteredPropertyCard({ property }: FilteredPropertyCardP
     id,
     title,
     location,
+    city_name,
+    neighborhood,
     price,
     area,
     bedrooms,
@@ -37,6 +39,11 @@ export default function FilteredPropertyCard({ property }: FilteredPropertyCardP
   } = property;
 
   const imageUrl = primary_image || image;
+  
+  // Build location string
+  const locationString = [city_name, neighborhood, location]
+    .filter(Boolean)
+    .join("، ") || location || "موقعیت نامشخص";
 
   return (
     <Link href={`/Detail/${id}`}>
@@ -79,30 +86,28 @@ export default function FilteredPropertyCard({ property }: FilteredPropertyCardP
           </h3>
 
           {/* Location */}
-          {location && (
-            <p className="text-sm text-gray-600 mb-3 flex items-center gap-1">
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-              </svg>
-              {location}
-            </p>
-          )}
+          <p className="text-sm text-gray-600 mb-3 flex items-center gap-1">
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+              />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+            {locationString}
+          </p>
 
           {/* Price */}
           <div className="mb-4">

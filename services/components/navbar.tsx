@@ -45,7 +45,7 @@ export default function Navbar() {
                 درباره ما
               </Link>
               <Link
-                href="/Prop"
+                href="/Map"
                 className="text-[#1e3a5f] font-medium hover:text-[#0f2a47] transition-colors px-3 py-2 rounded-lg hover:bg-gray-50 relative"
               >
                 املاک

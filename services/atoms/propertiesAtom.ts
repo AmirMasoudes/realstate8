@@ -26,6 +26,9 @@ export const propertiesErrorAtom = atom<XHRError | null>(null);
 // Selected property
 export const selectedPropertyAtom = atom<Property | null>(null);
 
+// Selected property ID (for map/list synchronization)
+export const selectedPropertyIdAtom = atom<number | null>(null);
+
 // Pagination
 export const paginationAtom = atom<{
   count: number;
