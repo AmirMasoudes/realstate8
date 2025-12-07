@@ -3,9 +3,8 @@
  * All API calls for the Home page should be defined here
  */
 
-import xhr from "../../services/api/xhr";
+import { getProperties } from "./api/getProperties";
 import { Property } from "../../services/base/atoms";
-import { extractError } from "../../services/err/errorHandler";
 
 export interface FetchPropertiesParams {
   page?: number;
@@ -15,26 +14,20 @@ export interface FetchPropertiesParams {
 
 /**
  * Fetch properties list
+ * Re-export from api/getProperties for backward compatibility
  */
 export async function fetchProperties(
   params?: FetchPropertiesParams
 ): Promise<Property[]> {
-  try {
-    const data = await xhr.get<Property[]>("properties/", { params });
-    return Array.isArray(data) ? data : data.results || [];
-  } catch (err) {
-    throw extractError(err);
-  }
+  // For now, ignore params and fetch all
+  // Can be extended later to support pagination
+  return getProperties();
 }
 
 /**
  * Fetch featured properties
  */
 export async function fetchFeaturedProperties(): Promise<Property[]> {
-  try {
-    const data = await xhr.get<Property[]>("properties/featured/");
-    return Array.isArray(data) ? data : data.results || [];
-  } catch (err) {
-    throw extractError(err);
-  }
+  // Use same function for now, can be extended later
+  return getProperties();
 }

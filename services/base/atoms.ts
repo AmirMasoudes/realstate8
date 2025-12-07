@@ -18,13 +18,20 @@ export const globalErrorAtom = atom<string | null>(null);
 // ==================== Properties ====================
 export interface Property {
   id: number;
-  title: string;
-  location: string;
-  price: string;
+  title?: string;
+  area: number; // in square meters
   bedrooms: number;
-  bathrooms: number;
-  area: string;
-  image?: string;
+  price: number; // price value
+  currency?: string; // e.g., "Toman"
+  primary_image?: string | null; // Main property image
+  // Optional fields
+  location?: string;
+  city_name?: string; // City name
+  neighborhood?: string; // Neighborhood name
+  latitude?: number; // Geographic latitude
+  longitude?: number; // Geographic longitude
+  bathrooms?: number;
+  image?: string; // Legacy field
   description?: string;
   type?: string;
   status?: "available" | "sold" | "rented";
