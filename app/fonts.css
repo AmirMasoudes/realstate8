@@ -1,0 +1,34 @@
+/* Vazir Font - Load from CDN */
+@import url("https://cdn.jsdelivr.net/gh/rastikerdar/vazirfont@v30.1.0/dist/font-face.css");
+
+/* Fallback: Direct font-face definition */
+@font-face {
+  font-family: "Vazir";
+  src: url("https://cdn.jsdelivr.net/gh/rastikerdar/vazirfont@v30.1.0/dist/Vazir.woff2") format("woff2"),
+       url("https://cdn.jsdelivr.net/gh/rastikerdar/vazirfont@v30.1.0/dist/Vazir.woff") format("woff"),
+       url("https://cdn.jsdelivr.net/gh/rastikerdar/vazirfont@v30.1.0/dist/Vazir.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Vazir";
+  src: url("https://cdn.jsdelivr.net/gh/rastikerdar/vazirfont@v30.1.0/dist/Vazir-Bold.woff2") format("woff2"),
+       url("https://cdn.jsdelivr.net/gh/rastikerdar/vazirfont@v30.1.0/dist/Vazir-Bold.woff") format("woff"),
+       url("https://cdn.jsdelivr.net/gh/rastikerdar/vazirfont@v30.1.0/dist/Vazir-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Vazir";
+  src: url("https://cdn.jsdelivr.net/gh/rastikerdar/vazirfont@v30.1.0/dist/Vazir-Medium.woff2") format("woff2"),
+       url("https://cdn.jsdelivr.net/gh/rastikerdar/vazirfont@v30.1.0/dist/Vazir-Medium.woff") format("woff"),
+       url("https://cdn.jsdelivr.net/gh/rastikerdar/vazirfont@v30.1.0/dist/Vazir-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+

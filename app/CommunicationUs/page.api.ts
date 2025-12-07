@@ -3,7 +3,7 @@
  */
 
 import xhr from "../../services/api/xhr";
-import { logServerError } from "../../services/err/error";
+import { extractError } from "../../services/err/errorHandler";
 
 export interface ContactFormData {
   name: string;
@@ -13,24 +13,21 @@ export interface ContactFormData {
   message: string;
 }
 
+export interface ContactResponse {
+  success: boolean;
+  message: string;
+}
+
 /**
  * Submit contact form
  */
 export async function submitContactForm(
   data: ContactFormData
-): Promise<{ success: boolean; message: string }> {
+): Promise<ContactResponse> {
   try {
-    const response = await xhr.post<{ success: boolean; message: string }>(
-      "/api/contact",
-      data
-    );
+    const response = await xhr.post<ContactResponse>("contact/", data);
     return response;
-  } catch (error: any) {
-    logServerError(error, {
-      endpoint: "/api/contact",
-      method: "POST",
-      payload: data,
-    });
-    throw error;
+  } catch (err) {
+    throw extractError(err);
   }
 }

@@ -4,21 +4,17 @@
 
 import xhr from "../../services/api/xhr";
 import { Property } from "../../services/base/atoms";
-import { logServerError } from "../../services/err/error";
+import { extractError } from "../../services/err/errorHandler";
 
 /**
  * Fetch bookmarked properties
  */
 export async function fetchBookmarkedProperties(): Promise<Property[]> {
   try {
-    const data = await xhr.get<Property[]>("/api/bookmarks");
-    return data;
-  } catch (error: any) {
-    logServerError(error, {
-      endpoint: "/api/bookmarks",
-      method: "GET",
-    });
-    throw error;
+    const data = await xhr.get<Property[]>("bookmarks/");
+    return Array.isArray(data) ? data : data.results || [];
+  } catch (err) {
+    throw extractError(err);
   }
 }
 
@@ -27,13 +23,9 @@ export async function fetchBookmarkedProperties(): Promise<Property[]> {
  */
 export async function addBookmark(propertyId: number): Promise<void> {
   try {
-    await xhr.post(`/api/bookmarks/${propertyId}`);
-  } catch (error: any) {
-    logServerError(error, {
-      endpoint: `/api/bookmarks/${propertyId}`,
-      method: "POST",
-    });
-    throw error;
+    await xhr.post(`bookmarks/`, { property_id: propertyId });
+  } catch (err) {
+    throw extractError(err);
   }
 }
 
@@ -42,12 +34,8 @@ export async function addBookmark(propertyId: number): Promise<void> {
  */
 export async function removeBookmark(propertyId: number): Promise<void> {
   try {
-    await xhr.delete(`/api/bookmarks/${propertyId}`);
-  } catch (error: any) {
-    logServerError(error, {
-      endpoint: `/api/bookmarks/${propertyId}`,
-      method: "DELETE",
-    });
-    throw error;
+    await xhr.delete(`bookmarks/${propertyId}/`);
+  } catch (err) {
+    throw extractError(err);
   }
 }

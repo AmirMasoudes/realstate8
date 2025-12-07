@@ -5,8 +5,8 @@ import { useAtom, useAtomValue } from "jotai";
 import Link from "next/link";
 import {
   propertiesAtom,
-  loadingAtom,
-  errorAtom,
+  propertiesLoadingAtom,
+  propertiesErrorAtom,
   searchQueryAtom,
   filtersAtom,
   filteredPropertiesWithSearchAtom,
@@ -15,16 +15,18 @@ import {
 } from "../../services/base/atoms";
 import ErrorMessage from "../../services/components/ErrorMessage";
 import { fetchProperties } from "./page.api";
+import { useError } from "../../services/err/useError";
 
 export default function PropertiesPage() {
   const [properties, setProperties] = useAtom(propertiesAtom);
-  const [loading, setLoading] = useAtom(loadingAtom);
-  const [error, setError] = useAtom(errorAtom);
+  const [loading, setLoading] = useAtom(propertiesLoadingAtom);
+  const [error, setError] = useAtom(propertiesErrorAtom);
   const [searchQuery, setSearchQuery] = useAtom(searchQueryAtom);
   const [filters, setFilters] = useAtom(filtersAtom);
   const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
   const itemsPerPage = useAtomValue(itemsPerPageAtom);
   const filteredProperties = useAtomValue(filteredPropertiesWithSearchAtom);
+  const { handleError, clearError } = useError();
 
   useEffect(() => {
     const loadProperties = async () => {
@@ -36,15 +38,17 @@ export default function PropertiesPage() {
           search: searchQuery || undefined,
         });
         setProperties(data);
-      } catch (err: any) {
-        setError(err);
+      } catch (err) {
+        const errorObj = err as any;
+        setError(errorObj);
+        handleError(err, { showToast: true });
       } finally {
         setLoading(false);
       }
     };
 
     loadProperties();
-  }, [setProperties, setLoading, setError, searchQuery, filters]);
+  }, [setProperties, setLoading, setError, searchQuery, filters, handleError]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
@@ -89,7 +93,7 @@ export default function PropertiesPage() {
   return (
     <div className="min-h-screen bg-gray-50 py-20 px-4 md:px-8">
       <div className="max-w-7xl mx-auto">
-        <ErrorMessage className="mb-6" onDismiss={() => setError(null)} />
+        <ErrorMessage className="mb-6" onDismiss={() => { setError(null); clearError(); }} />
 
         {/* Header */}
         <div className="text-center mb-12">

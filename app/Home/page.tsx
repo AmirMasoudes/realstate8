@@ -4,7 +4,7 @@ import ListProp from "./components/listprop";
 
 export default function Home() {
   return (
-    <div>
+    <div className="min-h-screen">
       <Hero />
       <ListProp />
     </div>

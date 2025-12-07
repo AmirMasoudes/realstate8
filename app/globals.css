@@ -1,5 +1,16 @@
 @import "tailwindcss";
 
+/* ============================================
+   VAZIR FONT - FORCE FOR ALL ELEMENTS
+   ============================================ */
+
+/* Force Vazir font for everything - Highest priority - Must be first */
+*,
+*::before,
+*::after {
+  font-family: "Vazir", "Vazirmatn", "Tahoma", "Arial", sans-serif !important;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -8,8 +19,10 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-vazirmatn), "Vazirmatn", "Tahoma", "Arial", sans-serif;
-  --font-mono: var(--font-geist-mono);
+  --font-sans: "Vazir", "Vazirmatn", "Tahoma", "Arial", sans-serif;
+  --font-mono: "Vazir", "Vazirmatn", "Tahoma", "Arial", sans-serif;
+  --font-family: "Vazir", "Vazirmatn", "Tahoma", "Arial", sans-serif;
+  --font-serif: "Vazir", "Vazirmatn", "Tahoma", "Arial", sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,14 +35,151 @@
 * {
   direction: rtl;
   text-align: right;
+  font-family: "Vazir", "Vazirmatn", "Tahoma", "Arial", sans-serif !important;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-vazirmatn), "Vazirmatn", "Tahoma", "Arial", sans-serif;
+  font-family: "Vazir", "Vazirmatn", "Tahoma", "Arial", sans-serif !important;
   direction: rtl;
   text-align: right;
+}
+
+/* Apply Vazir font to all elements */
+html,
+body,
+div,
+span,
+h1, h2, h3, h4, h5, h6,
+p,
+a,
+button,
+input,
+textarea,
+select,
+label,
+li,
+ul,
+ol,
+table,
+td,
+th,
+tr,
+thead,
+tbody,
+tfoot {
+  font-family: "Vazir", "Vazirmatn", "Tahoma", "Arial", sans-serif !important;
+}
+
+/* Vazir Font Class */
+.font-vazir {
+  font-family: "Vazir", "Vazirmatn", "Tahoma", "Arial", sans-serif !important;
+}
+
+/* Ensure all Tailwind classes use Vazir */
+.font-sans {
+  font-family: "Vazir", "Vazirmatn", "Tahoma", "Arial", sans-serif !important;
+}
+
+/* Apply to all text elements and Tailwind classes */
+[class*="text-"],
+[class*="font-"],
+button,
+input,
+textarea,
+select,
+nav,
+header,
+footer,
+main,
+section,
+article,
+aside,
+figcaption,
+caption,
+strong,
+b,
+em,
+i,
+small,
+sub,
+sup,
+mark,
+del,
+ins,
+code,
+pre,
+kbd,
+samp,
+var,
+dfn,
+abbr,
+time,
+address,
+cite,
+q,
+blockquote,
+dl,
+dt,
+dd,
+menu,
+menuitem,
+summary,
+details {
+  font-family: "Vazir", "Vazirmatn", "Tahoma", "Arial", sans-serif !important;
+}
+
+/* Override any inline styles or component styles */
+[style*="font-family"] {
+  font-family: "Vazir", "Vazirmatn", "Tahoma", "Arial", sans-serif !important;
+}
+
+/* Force Vazir for all Tailwind utility classes */
+.font-serif,
+.font-mono,
+.font-sans,
+[class*="font-"] {
+  font-family: "Vazir", "Vazirmatn", "Tahoma", "Arial", sans-serif !important;
+}
+
+/* Force Vazir for all text size classes */
+[class*="text-xs"],
+[class*="text-sm"],
+[class*="text-base"],
+[class*="text-lg"],
+[class*="text-xl"],
+[class*="text-2xl"],
+[class*="text-3xl"],
+[class*="text-4xl"],
+[class*="text-5xl"],
+[class*="text-6xl"] {
+  font-family: "Vazir", "Vazirmatn", "Tahoma", "Arial", sans-serif !important;
+}
+
+/* Force Vazir for React components and Next.js elements */
+#__next,
+#root,
+[data-nextjs-scroll-focus-boundary] {
+  font-family: "Vazir", "Vazirmatn", "Tahoma", "Arial", sans-serif !important;
+}
+
+/* Force Vazir for all form elements */
+form,
+fieldset,
+legend,
+optgroup,
+option {
+  font-family: "Vazir", "Vazirmatn", "Tahoma", "Arial", sans-serif !important;
+}
+
+/* Force Vazir for all interactive elements */
+[role="button"],
+[role="link"],
+[role="menuitem"],
+[role="tab"],
+[role="option"] {
+  font-family: "Vazir", "Vazirmatn", "Tahoma", "Arial", sans-serif !important;
 }
 
 /* RTL specific adjustments */

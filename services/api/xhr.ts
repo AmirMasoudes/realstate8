@@ -1,8 +1,11 @@
 /**
- * Centralized XHR Layer
+ * Centralized XHR Layer with Axios
  * All API requests must go through this module
- * Never use fetch directly elsewhere in the project
+ * Base URL: http://localhost:8000/api/
  */
+
+import axios, { AxiosInstance, AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import toast from "react-hot-toast";
 
 export interface XHRError {
   status: number;
@@ -11,28 +14,87 @@ export interface XHRError {
   raw?: any;
 }
 
-export interface XHRConfig {
-  headers?: Record<string, string>;
+export interface XHRConfig extends AxiosRequestConfig {
   params?: Record<string, any>;
-  timeout?: number;
+  showErrorToast?: boolean; // Control whether to show toast on error
 }
 
 class XHR {
-  private baseURL: string;
-  private defaultHeaders: Record<string, string>;
+  private instance: AxiosInstance;
+  private baseURL: string = "http://localhost:8000/api/";
   private defaultTimeout: number = 30000;
 
   constructor() {
-    // Set base URL from environment or default
-    this.baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || "";
-    this.defaultHeaders = {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    };
+    // Set base URL from environment or use default
+    this.baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000/api/";
+
+    // Create axios instance
+    this.instance = axios.create({
+      baseURL: this.baseURL,
+      timeout: this.defaultTimeout,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+
+    // Setup interceptors
+    this.setupInterceptors();
   }
 
   /**
-   * Get auth token from storage or context
+   * Setup request and response interceptors
+   */
+  private setupInterceptors(): void {
+    // Request interceptor
+    this.instance.interceptors.request.use(
+      (config) => {
+        // Add auth token if available
+        const token = this.getAuthToken();
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+
+        return config;
+      },
+      (error: AxiosError) => {
+        // Request error
+        const errorMessage = this.extractErrorMessage(error);
+        if (error.config?.showErrorToast !== false) {
+          toast.error(errorMessage);
+        }
+        return Promise.reject(this.normalizeError(error));
+      }
+    );
+
+    // Response interceptor
+    this.instance.interceptors.response.use(
+      (response: AxiosResponse) => {
+        // Return response data directly
+        return response;
+      },
+      (error: AxiosError) => {
+        // Response error
+        const normalizedError = this.normalizeError(error);
+        const errorMessage = normalizedError.message;
+
+        // Show toast unless explicitly disabled
+        if (error.config?.showErrorToast !== false) {
+          toast.error(errorMessage);
+        }
+
+        // Handle 401 - Unauthorized
+        if (normalizedError.status === 401) {
+          this.handleUnauthorized();
+        }
+
+        return Promise.reject(normalizedError);
+      }
+    );
+  }
+
+  /**
+   * Get auth token from localStorage
    */
   private getAuthToken(): string | null {
     if (typeof window !== "undefined") {
@@ -42,166 +104,83 @@ class XHR {
   }
 
   /**
-   * Build full URL with query parameters
+   * Handle 401 Unauthorized
    */
-  private buildURL(endpoint: string, params?: Record<string, any>): string {
-    const url = endpoint.startsWith("http")
-      ? endpoint
-      : `${this.baseURL}${endpoint}`;
-
-    if (!params) return url;
-
-    const searchParams = new URLSearchParams();
-    Object.entries(params).forEach(([key, value]) => {
-      if (value !== undefined && value !== null) {
-        searchParams.append(key, String(value));
-      }
-    });
-
-    const queryString = searchParams.toString();
-    return queryString ? `${url}?${queryString}` : url;
+  private handleUnauthorized(): void {
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("auth_token");
+      // Optionally redirect to login
+      // window.location.href = "/login";
+    }
   }
 
   /**
-   * Normalize error response
+   * Extract error message from Axios error
    */
-  private normalizeError(
-    status: number,
-    response: any,
-    url: string,
-    method: string
-  ): XHRError {
-    let message = "خطایی رخ داد";
-    let details = null;
-
-    if (response) {
-      if (typeof response === "string") {
-        try {
-          const parsed = JSON.parse(response);
-          message = parsed.message || parsed.error || message;
-          details = parsed.details || parsed.errors || null;
-        } catch {
-          message = response || message;
-        }
-      } else if (typeof response === "object") {
-        message = response.message || response.error || message;
-        details = response.details || response.errors || null;
+  private extractErrorMessage(error: AxiosError): string {
+    // Try to get message from response
+    if (error.response?.data) {
+      const data = error.response.data as any;
+      
+      // Check for common error message fields
+      if (data.message) return data.message;
+      if (data.error) return data.error;
+      if (data.detail) return data.detail;
+      if (data.errors && Array.isArray(data.errors)) {
+        return data.errors.join(", ");
       }
+      if (typeof data === "string") return data;
     }
 
-    // Status-based messages
-    if (!response || !response.message) {
-      switch (status) {
-        case 400:
-          message = "درخواست نامعتبر است";
-          break;
-        case 401:
-          message = "لطفاً وارد حساب کاربری خود شوید";
-          break;
-        case 403:
-          message = "شما دسترسی به این بخش ندارید";
-          break;
-        case 404:
-          message = "منبع مورد نظر یافت نشد";
-          break;
-        case 422:
-          message = "اطلاعات ارسالی نامعتبر است";
-          break;
-        case 500:
-          message = "خطای سرور رخ داد";
-          break;
-        case 503:
-          message = "سرویس در دسترس نیست";
-          break;
-        default:
-          message = `خطا: ${status}`;
-      }
+    // Fallback to status-based messages
+    if (error.response?.status) {
+      return this.getStatusMessage(error.response.status);
     }
+
+    // Network error
+    if (error.code === "ECONNABORTED") {
+      return "درخواست به دلیل زمان‌بر بودن لغو شد";
+    }
+
+    if (error.message === "Network Error" || !error.response) {
+      return "خطا در اتصال به سرور. لطفاً اتصال اینترنت خود را بررسی کنید.";
+    }
+
+    return "خطایی رخ داد";
+  }
+
+  /**
+   * Get status-based error message
+   */
+  private getStatusMessage(status: number): string {
+    const messages: Record<number, string> = {
+      400: "درخواست نامعتبر است",
+      401: "لطفاً وارد حساب کاربری خود شوید",
+      403: "شما دسترسی به این بخش ندارید",
+      404: "منبع مورد نظر یافت نشد",
+      422: "اطلاعات ارسالی نامعتبر است",
+      500: "خطای سرور رخ داد. لطفاً بعداً تلاش کنید",
+      502: "خطا در ارتباط با سرور",
+      503: "سرویس در دسترس نیست",
+      504: "زمان اتصال به سرور به پایان رسید",
+    };
+
+    return messages[status] || `خطا: ${status}`;
+  }
+
+  /**
+   * Normalize error to XHRError format
+   */
+  private normalizeError(error: AxiosError): XHRError {
+    const message = this.extractErrorMessage(error);
+    const status = error.response?.status || 0;
 
     return {
       status,
       message,
-      details,
-      raw: response,
+      details: error.response?.data,
+      raw: error,
     };
-  }
-
-  /**
-   * Make HTTP request
-   */
-  private async request<T>(
-    method: string,
-    endpoint: string,
-    data?: any,
-    config?: XHRConfig
-  ): Promise<T> {
-    const url = this.buildURL(endpoint, config?.params);
-    const headers: Record<string, string> = {
-      ...this.defaultHeaders,
-      ...config?.headers,
-    };
-
-    // Add auth token if available
-    const token = this.getAuthToken();
-    if (token) {
-      headers.Authorization = `Bearer ${token}`;
-    }
-
-    const requestConfig: RequestInit = {
-      method,
-      headers,
-      signal: AbortSignal.timeout(config?.timeout || this.defaultTimeout),
-    };
-
-    if (data && (method === "POST" || method === "PUT" || method === "PATCH")) {
-      requestConfig.body = JSON.stringify(data);
-    }
-
-    try {
-      const response = await fetch(url, requestConfig);
-      const contentType = response.headers.get("content-type");
-
-      let responseData: any;
-      if (contentType?.includes("application/json")) {
-        responseData = await response.json();
-      } else {
-        responseData = await response.text();
-      }
-
-      if (!response.ok) {
-        const error = this.normalizeError(
-          response.status,
-          responseData,
-          url,
-          method
-        );
-        throw error;
-      }
-
-      return responseData as T;
-    } catch (error: any) {
-      if (error.name === "AbortError") {
-        throw {
-          status: 408,
-          message: "درخواست به دلیل زمان‌بر بودن لغو شد",
-          details: null,
-          raw: error,
-        } as XHRError;
-      }
-
-      if (error.status) {
-        // Already normalized error
-        throw error;
-      }
-
-      // Network or other errors
-      throw {
-        status: 0,
-        message: "خطا در اتصال به سرور",
-        details: error.message,
-        raw: error,
-      } as XHRError;
-    }
   }
 
   /**
@@ -210,9 +189,13 @@ class XHR {
   async get<T = any>(
     endpoint: string,
     params?: Record<string, any>,
-    config?: Omit<XHRConfig, "params">
+    config?: XHRConfig
   ): Promise<T> {
-    return this.request<T>("GET", endpoint, undefined, { ...config, params });
+    const response = await this.instance.get<T>(endpoint, {
+      ...config,
+      params,
+    });
+    return response.data;
   }
 
   /**
@@ -223,7 +206,8 @@ class XHR {
     data?: any,
     config?: XHRConfig
   ): Promise<T> {
-    return this.request<T>("POST", endpoint, data, config);
+    const response = await this.instance.post<T>(endpoint, data, config);
+    return response.data;
   }
 
   /**
@@ -234,7 +218,8 @@ class XHR {
     data?: any,
     config?: XHRConfig
   ): Promise<T> {
-    return this.request<T>("PUT", endpoint, data, config);
+    const response = await this.instance.put<T>(endpoint, data, config);
+    return response.data;
   }
 
   /**
@@ -245,7 +230,8 @@ class XHR {
     data?: any,
     config?: XHRConfig
   ): Promise<T> {
-    return this.request<T>("PATCH", endpoint, data, config);
+    const response = await this.instance.patch<T>(endpoint, data, config);
+    return response.data;
   }
 
   /**
@@ -254,12 +240,13 @@ class XHR {
   async delete<T = any>(
     endpoint: string,
     params?: Record<string, any>,
-    config?: Omit<XHRConfig, "params">
+    config?: XHRConfig
   ): Promise<T> {
-    return this.request<T>("DELETE", endpoint, undefined, {
+    const response = await this.instance.delete<T>(endpoint, {
       ...config,
       params,
     });
+    return response.data;
   }
 }
 

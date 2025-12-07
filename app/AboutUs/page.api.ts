@@ -3,15 +3,15 @@
  */
 
 import xhr from "../../services/api/xhr";
-import { logServerError } from "../../services/err/error";
+import { extractError } from "../../services/err/errorHandler";
 
 export interface AboutUsData {
   title: string;
   description: string;
-  mission: string;
-  vision: string;
-  values: string[];
-  team: Array<{
+  mission?: string;
+  vision?: string;
+  values?: string[];
+  team?: Array<{
     name: string;
     role: string;
     image?: string;
@@ -23,13 +23,9 @@ export interface AboutUsData {
  */
 export async function fetchAboutUsData(): Promise<AboutUsData> {
   try {
-    const data = await xhr.get<AboutUsData>("/api/about");
+    const data = await xhr.get<AboutUsData>("about/");
     return data;
-  } catch (error: any) {
-    logServerError(error, {
-      endpoint: "/api/about",
-      method: "GET",
-    });
-    throw error;
+  } catch (err) {
+    throw extractError(err);
   }
 }

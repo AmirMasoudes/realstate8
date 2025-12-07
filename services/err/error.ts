@@ -1,9 +1,11 @@
 /**
  * Error Handling System
  * Centralized error logging and formatting
+ * @deprecated Use errorHandler.ts instead
  */
 
 import { XHRError } from "../api/xhr";
+import { extractError } from "./errorHandler";
 
 export interface ErrorLog {
   timestamp: string;
@@ -51,27 +53,10 @@ export function logServerError(
 
 /**
  * Normalize error to XHRError format
+ * @deprecated Use extractError from errorHandler.ts instead
  */
 export function normalizeError(error: any): XHRError {
-  if (error && typeof error === "object" && "status" in error) {
-    return error as XHRError;
-  }
-
-  if (error instanceof Error) {
-    return {
-      status: 0,
-      message: error.message || "خطای نامشخص",
-      details: null,
-      raw: error,
-    };
-  }
-
-  return {
-    status: 0,
-    message: "خطای نامشخص رخ داد",
-    details: error,
-    raw: error,
-  };
+  return extractError(error);
 }
 
 /**

@@ -5,7 +5,7 @@
 
 import xhr from "../../services/api/xhr";
 import { Property } from "../../services/base/atoms";
-import { logServerError } from "../../services/err/error";
+import { extractError } from "../../services/err/errorHandler";
 
 export interface FetchPropertiesParams {
   page?: number;
@@ -16,6 +16,8 @@ export interface FetchPropertiesParams {
   bedrooms?: number;
   bathrooms?: number;
   propertyType?: string;
+  category?: number;
+  location?: string;
 }
 
 /**
@@ -25,19 +27,10 @@ export async function fetchProperties(
   params?: FetchPropertiesParams
 ): Promise<Property[]> {
   try {
-    const data = await xhr.get<Property[]>("/api/properties", params, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    return data;
-  } catch (error: any) {
-    logServerError(error, {
-      endpoint: "/api/properties",
-      method: "GET",
-      payload: params,
-    });
-    throw error;
+    const data = await xhr.get<Property[]>("properties/", { params });
+    return Array.isArray(data) ? data : data.results || [];
+  } catch (err) {
+    throw extractError(err);
   }
 }
 
@@ -46,13 +39,9 @@ export async function fetchProperties(
  */
 export async function fetchPropertyById(id: number): Promise<Property> {
   try {
-    const data = await xhr.get<Property>(`/api/properties/${id}`);
+    const data = await xhr.get<Property>(`properties/${id}/`);
     return data;
-  } catch (error: any) {
-    logServerError(error, {
-      endpoint: `/api/properties/${id}`,
-      method: "GET",
-    });
-    throw error;
+  } catch (err) {
+    throw extractError(err);
   }
 }
