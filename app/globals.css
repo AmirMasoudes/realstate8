@@ -11,6 +11,14 @@
   font-family: "Vazir", "Vazirmatn", "Tahoma", "Arial", sans-serif !important;
 }
 
+/* Force Vazir for all pseudo-elements */
+::placeholder,
+::-webkit-input-placeholder,
+::-moz-placeholder,
+:-ms-input-placeholder {
+  font-family: "Vazir", "Vazirmatn", "Tahoma", "Arial", sans-serif !important;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -80,6 +88,39 @@ tfoot {
 /* Ensure all Tailwind classes use Vazir */
 .font-sans {
   font-family: "Vazir", "Vazirmatn", "Tahoma", "Arial", sans-serif !important;
+}
+
+/* ============================================
+   CUSTOM SCROLLBAR - BLUE THEME
+   ============================================ */
+
+/* Webkit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  border-radius: 10px;
+  border: 2px solid #f1f5f9;
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #3b82f6 #f1f5f9;
 }
 
 /* Apply to all text elements and Tailwind classes */
@@ -160,7 +201,28 @@ details {
 /* Force Vazir for React components and Next.js elements */
 #__next,
 #root,
-[data-nextjs-scroll-focus-boundary] {
+[data-nextjs-scroll-focus-boundary],
+[data-reactroot],
+[data-react-helmet] {
+  font-family: "Vazir", "Vazirmatn", "Tahoma", "Arial", sans-serif !important;
+}
+
+/* Force Vazir for SVG text elements */
+svg text,
+svg tspan {
+  font-family: "Vazir", "Vazirmatn", "Tahoma", "Arial", sans-serif !important;
+}
+
+/* Force Vazir for all third-party components */
+[class*="react-"],
+[class*="next-"],
+[class*="swiper-"],
+[class*="slick-"] {
+  font-family: "Vazir", "Vazirmatn", "Tahoma", "Arial", sans-serif !important;
+}
+
+/* Force Vazir for all content inside iframes */
+iframe {
   font-family: "Vazir", "Vazirmatn", "Tahoma", "Arial", sans-serif !important;
 }
 

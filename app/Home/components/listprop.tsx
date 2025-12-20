@@ -12,7 +12,7 @@ import {
   propertiesListAtom,
   propertiesLoadingAtom,
   propertiesErrorAtom,
-} from "../../../services/atoms/propertiesAtom";
+} from "../atom/atom";
 import { useError } from "../../../services/err/useError";
 import { getProperties } from "../api/getProperties";
 import PropertyCard from "./PropertyCard";

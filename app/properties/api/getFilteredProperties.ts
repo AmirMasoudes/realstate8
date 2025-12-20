@@ -19,6 +19,7 @@ export interface FilterParams {
   bedrooms_max?: number;
   bathrooms?: number;
   status?: string;
+  property_type_name?: string;
   search?: string;
   ordering?: string;
   page?: number;

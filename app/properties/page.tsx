@@ -19,7 +19,6 @@ import { getFilteredProperties } from "./api/getFilteredProperties";
 import FilterPanel from "./components/FilterPanel";
 import FilteredPropertyCard from "./components/FilteredPropertyCard";
 import { useError } from "../../services/err/useError";
-import toast from "react-hot-toast";
 
 export default function PropertiesPage() {
   const router = useRouter();
@@ -49,8 +48,7 @@ export default function PropertiesPage() {
       } catch (err: any) {
         const errorMessage = err.message || "خطا در دریافت اطلاعات";
         setError(err);
-        handleError(err, { showToast: true });
-        toast.error(`خطا در دریافت املاک: ${errorMessage}`);
+        handleError(err, { showToast: true }); // Toast is handled by useError with deduplication
       } finally {
         setLoading(false);
       }

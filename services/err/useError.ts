@@ -7,7 +7,7 @@ import { useAtom } from "jotai";
 import { errorAtom } from "../base/atoms";
 import { extractError, parseError, isNetworkError, isServerError, isClientError } from "./errorHandler";
 import { XHRError } from "../api/xhr";
-import toast from "react-hot-toast";
+import { showErrorToast } from "../utils/toastManager";
 
 /**
  * Hook for handling errors in components
@@ -20,9 +20,9 @@ export function useError() {
       const extracted = extractError(err);
       setError(extracted);
 
-      // Show toast unless explicitly disabled
+      // Show toast unless explicitly disabled (with deduplication)
       if (options?.showToast !== false) {
-        toast.error(extracted.message);
+        showErrorToast(extracted.message, "useError-general");
       }
 
       // Log error in development

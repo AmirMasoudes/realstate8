@@ -1,7 +1,7 @@
 import React from "react";
 import Hero from "./components/hero";
 import ListProp from "./components/listprop";
-import PropertieMap from "../properties/components/PropertieMap";
+// Map component removed - using dedicated Map page instead
 
 export default function Home() {
   return (

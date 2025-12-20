@@ -10,7 +10,7 @@ import {
   errorAtom,
 } from "../../../services/base/atoms";
 import ErrorMessage from "../../../services/components/ErrorMessage";
-import { fetchPropertyById } from "./page.api";
+import { fetchPropertyById } from "../../api/page.api";
 
 export default function PropertyDetailPage() {
   const params = useParams();

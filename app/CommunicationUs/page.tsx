@@ -8,7 +8,7 @@ import {
   errorAtom,
 } from "../../services/base/atoms";
 import ErrorMessage from "../../services/components/ErrorMessage";
-import { submitContactForm } from "./page.api";
+import { submitContactForm } from "./api/page.api";
 
 export default function ContactUsPage() {
   const [formData, setFormData] = useState({

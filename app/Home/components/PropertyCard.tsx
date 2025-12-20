@@ -12,7 +12,7 @@ import { useAtom } from "jotai";
 import { Property } from "../../../services/base/atoms";
 import { likedIdsAtom, likeIdsMapAtom, likeLoadingAtom } from "../../../services/atoms/propertiesAtom";
 import { addLike, removeLike, checkLike } from "../api/toggleLike";
-import toast from "react-hot-toast";
+import { showSuccessToast, showErrorToast } from "../../../services/utils/toastManager";
 
 interface PropertyCardProps {
   property: Property;
@@ -85,7 +85,7 @@ export default function PropertyCard({ property, onClick }: PropertyCardProps) {
         const newMap = { ...likeIdsMap };
         delete newMap[id];
         setLikeIdsMap(newMap);
-        toast.success("لایک حذف شد");
+        showSuccessToast("لایک حذف شد");
       } else {
         // Add like
         console.log("Adding like for property:", id);
@@ -95,11 +95,11 @@ export default function PropertyCard({ property, onClick }: PropertyCardProps) {
         setLikeId(response.id);
         setLikedIds([...likedIds, id]);
         setLikeIdsMap({ ...likeIdsMap, [id]: response.id });
-        toast.success("لایک شد ❤️");
+        showSuccessToast("لایک شد ❤️");
       }
     } catch (err: any) {
       console.error("Like error:", err);
-      toast.error(err.message || "خطا در لایک کردن");
+      showErrorToast(err.message || "خطا در لایک کردن", "home-property-like");
     } finally {
       setLikeLoading({ ...likeLoading, [id]: false });
     }
